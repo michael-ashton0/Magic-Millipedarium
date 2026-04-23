@@ -3,6 +3,9 @@ import serial
 from time import sleep
 
 VOLUME = 20
+NARRATION_TIME_BEFORE_UV = 41
+TIME_UV_ON = 30
+TIME_IN_DARK = 30
 
 green_led = LED(16)
 red_led = LED(18)
@@ -106,13 +109,14 @@ def main():
             set_narr_state()
             dfplayer_play_track(2)
             
-            sleep(41)
-            set_uv_state()
-
-            sleep(30)
-            set_dark_state()
+            sleep(NARRATION_TIME_BEFORE_UV)
             
-            sleep(30)
+            set_uv_state()
+            sleep(TIME_UV_ON)
+            
+            set_dark_state()
+            sleep(TIME_IN_DARK)
+            
             dfplayer_stop()
             sleep(0.2)
 

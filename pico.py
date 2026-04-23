@@ -2,6 +2,9 @@ from machine import Pin, UART
 import time
 
 VOLUME = 20
+NARRATION_TIME_BEFORE_UV = 41
+TIME_UV_ON = 30
+TIME_IN_DARK = 30
 
 # Pin setup, GP14, GP15, GP16
 green_led = Pin(14, Pin.OUT)
@@ -106,16 +109,17 @@ def main():
 
         if button.value() == 0:
             wait_for_button_release()
+            
             set_narr_state()
             dfplayer_play_track(2)
+            time.sleep(NARRATION_TIME_BEFORE_UV)
             
-            time.sleep(41)
             set_uv_state()
-
-            time.sleep(30)
-            set_dark_state()
+            time.sleep(TIME_UV_ON)
             
-            time.sleep(30)
+            set_dark_state()
+            time.sleep(TIME_IN_DARK)
+            
             dfplayer_stop()
             time.sleep_ms(200)
 
